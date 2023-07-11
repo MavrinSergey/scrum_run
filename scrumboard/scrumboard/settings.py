@@ -36,24 +36,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework_simplejwt',
     'board.apps.BoardConfig',
     'rest_framework',
-    'corsheaders',  # для подключения фронта
+    'corsheaders', # для подключения фронта
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',  # для принятия запросов от фронта с другого порта
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'corsheaders.middleware.CorsMiddleware',  # для принятия запросов от фронта с другого порта
-
+    'django.middleware.common.CommonMiddleware',  # для принятия запросов от фронта с другого порта
 ]
 
 ROOT_URLCONF = 'scrumboard.urls'
@@ -81,7 +79,7 @@ WSGI_APPLICATION = 'scrumboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # удалили psycopg2
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'scrumrun',
         'USER': 'admin',
         'PASSWORD': 'admin',
@@ -114,16 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-Ru'
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
 
-CORS_ORIGIN_ALLOW_ALL = True  # для подключения фронта 3000
+CORS_ORIGIN_ALLOW_ALL = True # для подключения фронта 3000
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',  # для подключения фронта 3000
+    'http://localhost:3000', # для подключения фронта 3000
     'http://localhost:8000',
 )
 
@@ -182,6 +180,6 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1440),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
