@@ -1,16 +1,19 @@
 from django.contrib import admin
+from .models import User, Task, SignIn, StatusTask, Company, Project, StatusUserProjects, ProjectParticipants
 from .models import User, Task, SignIn, Status
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+from django.utils.translation import gettext_lazy as _
+from .models import User
 
 # admin.site.register(User)
 admin.site.register(Task)
 admin.site.register(SignIn)
-admin.site.register(Status)
-
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from django.utils.translation import gettext_lazy as _
-
-from .models import User
+admin.site.register(StatusTask)
+admin.site.register(Project)
+admin.site.register(Company)
+admin.site.register(StatusUserProjects)
+admin.site.register(ProjectParticipants)
 
 
 @admin.register(User)

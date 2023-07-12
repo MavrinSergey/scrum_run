@@ -1,9 +1,17 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView, TokenVerifyView,
 )
-from .views import RegistrationAPIView, TaskAPIList, TaskAPIUpdate, TaskAPIDestroy
+from .views import RegistrationAPIView, TaskAPIList, TaskAPIUpdate, TaskAPIDestroy, ProjectViewSet, CompanyViewSet, \
+    StatusUserProjectsViewSet, ProjectParticipantsViewSet
+
+router = routers.SimpleRouter()
+router.register(r'project', ProjectViewSet)
+router.register(r'company', CompanyViewSet)
+router.register(r'statususer', StatusUserProjectsViewSet)
+router.register(r'projectparticipants', ProjectParticipantsViewSet)
 
 urlpatterns = [
     path('users/', RegistrationAPIView.as_view()),
@@ -13,5 +21,8 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/v1/', include(router.urls))
+    # path('api/v1/projectlist/', ProjectViewSet.as_view({'get': 'list'})),
+    # path('api/v1/projectdetail/<int:pk>/', ProjectViewSet.as_view({'put': 'update'})),
     # path('api/v1/board-auth/', include('rest_framework.urls')),
 ]

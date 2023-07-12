@@ -4,12 +4,9 @@ import jwt
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
-
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -45,23 +42,11 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class Company(models.Model):
-    title = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.title
-
-
 class User(AbstractUser):
     """User model."""
 
     username = None
     email = models.EmailField(_('email address'), unique=True)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = UserManager()
 
     def __str__(self):
         return self.email
@@ -71,10 +56,10 @@ class User(AbstractUser):
         return self._generate_jwt_token()
 
     def get_full_name(self):
-        return self.first_name  # поправить(сделать фулл нейм)
+        return self.username
 
-    # def get_short_name(self):
-    #     return self.first_name
+    def get_short_name(self):
+        return self.username
 
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=1)
@@ -87,21 +72,61 @@ class User(AbstractUser):
 
 
 class SignIn(models.Model):
-    email = models.EmailField(max_length=50)
-    password = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, blank=False)
+    email = models.EmailField(max_length=50, blank=False)
+    password = models.CharField(max_length=50, blank=False)
     signin_dt = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.email
+        return self.username
 
 
-class Status(models.Model):
-    """Статус задачи(в работу, в работе, на согласовании, завершено)"""
+class StatusTask(models.Model):
+    """
+
+    """
     name = models.CharField(max_length=20, db_index=True)
 
     def __str__(self):
         return self.name
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    date_creation = models.DateField(auto_now_add=True)
+    date_expiration = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+
+class Company(models.Model):
+    title = models.CharField(max_length=50)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class StatusUserProjects(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
+class ProjectParticipants(models.Model):
+    """
+
+    """
+    project = models.ManyToManyField(Project, default='')
+    user = models.ManyToManyField(User)
+    status_user_project = models.ManyToManyField(StatusUserProjects)
+
+    def __str__(self):
+        return self.project
 
 
 class Task(models.Model):
@@ -109,8 +134,9 @@ class Task(models.Model):
     description = models.CharField(max_length=255)
     date_creation = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT, null=True)
+    status = models.ForeignKey(StatusTask, on_delete=models.PROTECT, null=True)
     lead_time = models.DateField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
     # id_project = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
