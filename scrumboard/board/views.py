@@ -1,17 +1,19 @@
 from django.shortcuts import render
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import RegistrationSerializer, TaskSerializer
+from .serializers import RegistrationSerializer, TaskSerializer, ProjectSerializer, CompanySerializer, \
+    StatusUserProjectsSerializer, ProjectParticipantsSerializer
 from .renderers import UserJSONRenderer
-from .models import Task, SignIn, Status, User
+from .models import Task, SignIn, StatusTask, User, Project, Company, StatusUserProjects, ProjectParticipants
 
 
 class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
+
     serializer_class = RegistrationSerializer
     renderer_classes = (UserJSONRenderer,)
 
@@ -23,6 +25,26 @@ class RegistrationAPIView(APIView):
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+
+class StatusUserProjectsViewSet(viewsets.ModelViewSet):
+    queryset = StatusUserProjects.objects.all()
+    serializer_class = StatusUserProjectsSerializer
+
+
+class ProjectParticipantsViewSet(viewsets.ModelViewSet):
+    queryset = ProjectParticipants.objects.all()
+    serializer_class = ProjectParticipantsSerializer
 
 
 class TaskAPIList(generics.ListCreateAPIView):
@@ -43,5 +65,5 @@ class TaskAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
 
 
-# def index(request):
-#     return render(request, "index.html")
+def index(request):
+    return render(request, "index.html")
