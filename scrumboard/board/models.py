@@ -1,12 +1,10 @@
-from django.db import models
-
 import jwt
-from datetime import datetime, timedelta
-from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.conf import settings
+from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -47,6 +45,11 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
 
     def __str__(self):
         return self.email
