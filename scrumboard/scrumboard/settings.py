@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware',  # для принятия запросов от фронта с другого порта
+    # 'corsheaders.middleware.CorsMiddleware',  # для принятия запросов от фронта с другого порта
 
 ]
 
