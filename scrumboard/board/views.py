@@ -13,13 +13,11 @@ from .models import Task, SignIn, StatusTask, User, Project, Company, StatusUser
 
 class RegistrationAPIView(APIView):
     permission_classes = (AllowAny,)
-
     serializer_class = RegistrationSerializer
     renderer_classes = (UserJSONRenderer,)
 
     def post(self, request):
         user = request.data.get('user', {})
-
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
