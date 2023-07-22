@@ -5,7 +5,7 @@ from .models import User, Task, StatusTask, Project, Company, StatusUserProjects
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'password1', 'password2']
+        fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -33,6 +33,9 @@ class ProjectParticipantsSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    status = serializers.CharField(source='status.name')
+
     class Meta:
         model = Task
         fields = '__all__'
