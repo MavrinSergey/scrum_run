@@ -58,11 +58,11 @@ class User(AbstractUser):
     def token(self):
         return self._generate_jwt_token()
 
-    def get_full_name(self):
-        return self.username
-
-    def get_short_name(self):
-        return self.username
+    # def get_full_name(self):
+    #     return self.username
+    #
+    # def get_short_name(self):
+    #     return self.username
 
     def _generate_jwt_token(self):
         dt = datetime.now() + timedelta(days=1)
@@ -128,8 +128,8 @@ class ProjectParticipants(models.Model):
     user = models.ManyToManyField(User)
     status_user_project = models.ManyToManyField(StatusUserProjects)
 
-    def __str__(self):
-        return self.project
+    # def __str__(self):
+    #     return self.project
 
 
 class Task(models.Model):
