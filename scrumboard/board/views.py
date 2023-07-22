@@ -11,18 +11,11 @@ from .renderers import UserJSONRenderer
 from .models import Task, SignIn, StatusTask, User, Project, Company, StatusUserProjects, ProjectParticipants
 
 
-class RegistrationAPIView(APIView):
-    permission_classes = (AllowAny,)
+
+class RegistrationViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
     serializer_class = RegistrationSerializer
-    renderer_classes = (UserJSONRenderer,)
 
-    def post(self, request):
-        user = request.data.get('user', {})
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class ProjectViewSet(viewsets.ModelViewSet):

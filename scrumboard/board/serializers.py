@@ -3,6 +3,8 @@ from .models import User, Task, StatusTask, Project, Company, StatusUserProjects
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+
+======
     password = serializers.CharField(
         max_length=128,
         min_length=1,
@@ -14,8 +16,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'password1', 'password2']
 
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+
+    # def create(self, validated_data):
+    #     return User.objects.create_user(**validated_data)
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -43,7 +46,6 @@ class ProjectParticipantsSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Task
         fields = '__all__'
