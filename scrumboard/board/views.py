@@ -1,21 +1,15 @@
 from django.shortcuts import render
 from rest_framework import status, generics, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from .permissions import IsOwnerOrReadOnly
 from .serializers import RegistrationSerializer, TaskSerializer, ProjectSerializer, CompanySerializer, \
     StatusUserProjectsSerializer, ProjectParticipantsSerializer
-from .renderers import UserJSONRenderer
 from .models import Task, SignIn, StatusTask, User, Project, Company, StatusUserProjects, ProjectParticipants
-
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = RegistrationSerializer
-
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
