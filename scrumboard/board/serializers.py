@@ -33,9 +33,6 @@ class ProjectParticipantsSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    status = serializers.CharField(source='status.name')
-
     class Meta:
         model = Task
         fields = '__all__'
@@ -45,6 +42,3 @@ class StatusTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = StatusTask
         fields = '__all__'
-
-    def create(self, validated_data):
-        return StatusTask.objects.create(**validated_data)

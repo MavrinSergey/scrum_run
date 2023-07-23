@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from rest_framework import status, generics, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
-from .permissions import IsOwnerOrReadOnly
-# from .renderers import UserJSONRenderer
+from rest_framework import generics, viewsets
+from rest_framework.response import Response
+
 from .serializers import RegistrationSerializer, TaskSerializer, ProjectSerializer, CompanySerializer, \
     StatusUserProjectsSerializer, ProjectParticipantsSerializer
-from .models import Task, SignIn, StatusTask, User, Project, Company, StatusUserProjects, ProjectParticipants
+from .models import Task, User, Project, Company, StatusUserProjects, ProjectParticipants
 
 
 class RegistrationViewSet(generics.ListCreateAPIView):
@@ -16,7 +15,7 @@ class RegistrationViewSet(generics.ListCreateAPIView):
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    # renderer_classes = (UserJSONRenderer,)
+
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
@@ -36,19 +35,16 @@ class ProjectParticipantsViewSet(viewsets.ModelViewSet):
 class TaskAPIList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
 
 
 class TaskAPIUpdate(generics.UpdateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
 
 
 class TaskAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
 
 
 def index(request):

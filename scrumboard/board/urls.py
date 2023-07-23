@@ -22,7 +22,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-path('api/user/', RegistrationViewSet.as_view(), name='registration'),
+    path('api/user/', RegistrationViewSet.as_view(), name='registration'),
     # path('api/v1/', include(router.urls)),
     path('api/v1/project/', ProjectViewSet.as_view({'get': 'list'})),
     path('api/v1/company/', CompanyViewSet.as_view({'get': 'list'})),
