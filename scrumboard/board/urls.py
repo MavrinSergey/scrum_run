@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView, TokenVerifyView,
 )
 from .views import RegistrationViewSet, TaskAPIList, TaskAPIUpdate, TaskAPIDestroy, ProjectViewSet, CompanyViewSet, \
-    StatusUserProjectsViewSet, ProjectParticipantsViewSet
+    StatusUserProjectsViewSet, ProjectParticipantsViewSet, index
 
 # router = routers.SimpleRouter()
 # router.register(r'project', ProjectViewSet)
@@ -15,7 +15,7 @@ from .views import RegistrationViewSet, TaskAPIList, TaskAPIUpdate, TaskAPIDestr
 
 
 urlpatterns = [
-
+    path('', index),
     path('api/v1/task/', TaskAPIList.as_view()),
     path('api/v1/task/<int:pk>/', TaskAPIUpdate.as_view()),
     path('api/v1/taskdelete/<int:pk>/', TaskAPIDestroy.as_view()),
