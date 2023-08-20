@@ -33,12 +33,15 @@ class ProjectParticipantsSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(source='status.name')
+
     class Meta:
         model = Task
         fields = '__all__'
 
 
 class StatusTaskSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = StatusTask
         fields = '__all__'
