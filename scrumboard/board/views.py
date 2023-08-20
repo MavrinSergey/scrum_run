@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
-from rest_framework.response import Response
 
-from .serializers import RegistrationSerializer, TaskSerializer, ProjectSerializer, CompanySerializer, \
-    StatusUserProjectsSerializer, ProjectParticipantsSerializer
-from .models import Task, User, Project, Company, StatusUserProjects, ProjectParticipants
+from .models import Task, User
+from .serializers import RegistrationSerializer, TaskSerializer
 
 
 class RegistrationViewSet(generics.ListCreateAPIView):
@@ -14,32 +12,7 @@ class RegistrationViewSet(generics.ListCreateAPIView):
     print("Завершился RegistrationViewSet")
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    print("Запустился ProjectViewSet")
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    print("Завершился ProjectViewSet")
 
-
-class CompanyViewSet(viewsets.ModelViewSet):
-    print("Запустился CompanyViewSet")
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
-    print("Завершился CompanyViewSet")
-
-
-class StatusUserProjectsViewSet(viewsets.ModelViewSet):
-    print("Запустился StatusUserProjectsViewSet")
-    queryset = StatusUserProjects.objects.all()
-    serializer_class = StatusUserProjectsSerializer
-    print("Завершился StatusUserProjectsViewSet")
-
-
-class ProjectParticipantsViewSet(viewsets.ModelViewSet):
-    print("Запустился ProjectParticipantsViewSet")
-    queryset = ProjectParticipants.objects.all()
-    serializer_class = ProjectParticipantsSerializer
-    print("Завершился ProjectParticipantsViewSet")
 
 class TaskAPIList(generics.ListCreateAPIView):
     print("Запустился TaskAPIList")
