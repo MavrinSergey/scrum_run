@@ -37,9 +37,9 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'users',
                 'abstract': False,
             },
-            managers=[
-                ('objects', board.models.UserManager()),
-            ],
+            # managers=[
+            #     ('objects', board.models.UserManager()),
+            # ],
         ),
         migrations.CreateModel(
             name='Project',

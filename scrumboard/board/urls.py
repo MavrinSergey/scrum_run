@@ -15,7 +15,7 @@ from .views import RegistrationViewSet, TaskAPIList, TaskAPIUpdate, TaskAPIDestr
 
 
 urlpatterns = [
-    path('', index),
+    # path('', index),
     path('api/v1/task/', TaskAPIList.as_view()),
     path('api/v1/task/<int:pk>/', TaskAPIUpdate.as_view()),
     path('api/v1/taskdelete/<int:pk>/', TaskAPIDestroy.as_view()),
