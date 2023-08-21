@@ -1,36 +1,26 @@
-from django.shortcuts import render
 from rest_framework import generics, viewsets
 
 from .models import Task, User
 from .serializers import RegistrationSerializer, TaskSerializer
 
+"""представления создаются средствами DRF
+    задача представлений обработка запроса и отправка данных пользователю
+    задача по формированию запроса передается Сериализаторам"""
+
 
 class RegistrationViewSet(generics.ListCreateAPIView):
+    """класс для обработки запроcов к модели User"""
+
     print("Запустился RegistrationViewSet")
     queryset = User.objects.all()
     serializer_class = RegistrationSerializer
     print("Завершился RegistrationViewSet")
 
 
+class TaskViewSet(viewsets.ModelViewSet):
+    """класс для обработки запроcов к модели Task"""
 
-
-class TaskAPIList(generics.ListCreateAPIView):
-    print("Запустился TaskAPIList")
+    print("Запустился TaskViewSet")
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    print("Завершился TaskAPIList")
-
-class TaskAPIUpdate(generics.UpdateAPIView):
-    print("Запустился TaskAPIUpdate")
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    print("Завершился TaskAPIUpdate")
-
-class TaskAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
-    print("Запустился TaskAPIDestroy")
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-    print("Завершился TaskAPIDestroy")
-
-def index(request):
-    return render(request, "index.html")
+    print("Завершился TaskViewSet")
