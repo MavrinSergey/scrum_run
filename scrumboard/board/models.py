@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    """User model."""
+    """User model. модель пользователь на ее основании создается таблица в БД board_user"""
     print("Запустился User")
     username = None
     email = models.EmailField(_('email address'), unique=True)
@@ -19,6 +19,7 @@ class User(AbstractUser):
 
 
 class Task(models.Model):
+    """Task model. модель пользователь на ее основании создается таблица в БД board_task"""
     print("Запустился Task")
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=255)

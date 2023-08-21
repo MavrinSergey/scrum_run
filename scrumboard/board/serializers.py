@@ -2,8 +2,13 @@ from rest_framework import serializers
 
 from .models import User, Task
 
+"""сериализатор - сердце DRF формирует данные для ответов на IP запросы, и выполняет парсинг входной информации 
+отдает данные из БД либо добавляет редактирует или удаляет из БД"""
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """Получает данные из RegistrationViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
+    RegistrationViewSet. работает с моделью User"""
     print("Запустился RegistrationSerializer")
 
     class Meta:
@@ -14,17 +19,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    """Получает данные из TaskViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
+    TaskViewSet. работает с моделью Task"""
     print("Запустился TaskSerializer")
-    # status = serializers.CharField(source='status.name')
 
     class Meta:
         model = Task
         fields = '__all__'
 
     print("Завершился TaskSerializer")
-
-    # def create(self, validated_data):
-    #     return Task(**validated_data)
-
-
-
