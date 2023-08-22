@@ -1,4 +1,6 @@
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Task, User
 from .serializers import RegistrationSerializer, TaskSerializer
@@ -21,6 +23,12 @@ class TaskViewSet(viewsets.ModelViewSet):
     """класс для обработки запроcов к модели Task"""
 
     print("Запустился TaskViewSet")
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().select_related('user')
     serializer_class = TaskSerializer
     print("Завершился TaskViewSet")
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskSerializer
+
+        return self.serializer_class

@@ -21,6 +21,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     """Получает данные из TaskViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
     TaskViewSet. работает с моделью Task"""
+    user_first_name = serializers.CharField(source='user.first_name')
+    user_last_name = serializers.CharField(source='user.last_name')
     print("Запустился TaskSerializer")
 
     class Meta:
