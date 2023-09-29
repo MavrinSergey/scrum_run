@@ -1,47 +1,37 @@
 from rest_framework import serializers
-from .models import User, Task, StatusTask, Project, Company, StatusUserProjects, ProjectParticipants
+
+from .models import User, Task
+
+"""сериализатор - сердце DRF формирует данные для ответов на IP запросы, и выполняет парсинг входной информации 
+отдает данные из БД либо добавляет редактирует или удаляет из БД"""
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """Получает данные из RegistrationViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
+    RegistrationViewSet. работает с моделью User"""
+    print("Запустился RegistrationSerializer")
+
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)  # Хеширование пароля
+        user.save()
+        return user
+
     class Meta:
         model = User
-        fields = '__all__'
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = '__all__'
-
-
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = '__all__'
-
-
-class StatusUserProjectsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StatusUserProjects
-        fields = '__all__'
-
-
-class ProjectParticipantsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProjectParticipants
-        fields = '__all__'
+        fields = ['password', 'email']
+    print("Завершился RegistrationSerializer")
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(source='status.name')
+    """Получает данные из TaskViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
+    TaskViewSet. работает с моделью Task"""
+    user_first_name = serializers.CharField(source='user.first_name', required=False)
+    user_last_name = serializers.CharField(source='user.last_name', required=False)
 
     class Meta:
         model = Task
-        fields = '__all__'
-
-
-class StatusTaskSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = StatusTask
         fields = '__all__'

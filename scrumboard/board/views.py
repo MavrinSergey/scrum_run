@@ -1,51 +1,39 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .serializers import RegistrationSerializer, TaskSerializer, ProjectSerializer, CompanySerializer, \
-    StatusUserProjectsSerializer, ProjectParticipantsSerializer
-from .models import Task, User, Project, Company, StatusUserProjects, ProjectParticipants
+from .models import Task, User
+from .serializers import RegistrationSerializer, TaskSerializer
+
+"""представления создаются средствами DRF
+    задача представлений обработка запроса и отправка данных пользователю
+    задача по формированию запроса передается Сериализаторам"""
 
 
 class RegistrationViewSet(generics.ListCreateAPIView):
+    """класс для обработки запроcов к модели User"""
+
+    print("Запустился RegistrationViewSet")
     queryset = User.objects.all()
     serializer_class = RegistrationSerializer
+    print("Завершился RegistrationViewSet")
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+class TaskViewSet(viewsets.ModelViewSet):
+    """класс для обработки запроcов к модели Task"""
 
-
-class CompanyViewSet(viewsets.ModelViewSet):
-    queryset = Company.objects.all()
-    serializer_class = CompanySerializer
-
-
-class StatusUserProjectsViewSet(viewsets.ModelViewSet):
-    queryset = StatusUserProjects.objects.all()
-    serializer_class = StatusUserProjectsSerializer
-
-
-class ProjectParticipantsViewSet(viewsets.ModelViewSet):
-    queryset = ProjectParticipants.objects.all()
-    serializer_class = ProjectParticipantsSerializer
-
-
-class TaskAPIList(generics.ListCreateAPIView):
-    queryset = Task.objects.all()
+    print("Запустился TaskViewSet")
+    queryset = Task.objects.all().select_related('user')
     serializer_class = TaskSerializer
+    print("Завершился TaskViewSet")
 
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskSerializer
 
-class TaskAPIUpdate(generics.UpdateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-
-class TaskAPIDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+        return self.serializer_class
 
 
 def index(request):
-    return render(request, "index.html")
+    return render(request, 'index.html')
