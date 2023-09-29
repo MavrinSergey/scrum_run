@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -32,3 +33,7 @@ class TaskViewSet(viewsets.ModelViewSet):
             return TaskSerializer
 
         return self.serializer_class
+
+
+def index(request):
+    return render(request, 'index.html')

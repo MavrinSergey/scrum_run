@@ -149,7 +149,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # аунтификация через JWT токены
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1440),  # время жизни ACCESS токена
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # время жизни REFRESH токена
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),  # время жизни REFRESH токена
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
@@ -183,5 +183,5 @@ SIMPLE_JWT = {
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1440),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=60),
 }
