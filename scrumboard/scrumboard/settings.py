@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'board.apps.BoardConfig',
     'rest_framework',
     'corsheaders',  # для подключения фронта
+
 ]
 
 MIDDLEWARE = [
