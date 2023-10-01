@@ -37,3 +37,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 
 def index(request):
     return render(request, 'index.html')
+
+
+# def bot(request):
+#     return render(request, 'bot_main.py')

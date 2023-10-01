@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1440),  # время жизни ACCESS токена
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=60),  # время жизни ACCESS токена
     'REFRESH_TOKEN_LIFETIME': timedelta(days=60),  # время жизни REFRESH токена
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -182,6 +182,6 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1440),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=60),
 }
