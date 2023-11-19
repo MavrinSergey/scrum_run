@@ -28,7 +28,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     print("Завершился TaskViewSet")
 
-    def get_serializer_class(self):
+    def get_serializer_class(self, *args, **kwargs):
         if self.action == 'list':
             return TaskSerializer
 
