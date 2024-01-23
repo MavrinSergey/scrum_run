@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import User, Task
 
@@ -35,3 +36,9 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):  # переопределение возвращаемых значений (Получаем токен пользователя)
+    @classmethod
+    def get_token(cls, User):
+        token = super().get_token(User)
+
+        return token

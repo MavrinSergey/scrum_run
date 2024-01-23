@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from . import views
-from .views import RegistrationViewSet, TaskViewSet
+from .views import RegistrationViewSet, TaskViewSet, MyTokenObtainPairView
 
 """создаем объект router на основе класса SimpleRouter"""
 router = routers.SimpleRouter()
@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),  # http://127.0.0.1:8000/api/v1/task/
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # запрос access и refresh токенов
+    path('api/token/bot/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'), # подмена запроса на наш кастомный
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # для получения нового access с помощью refresh
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import Task, User
 from .serializers import RegistrationSerializer, TaskSerializer
@@ -39,5 +41,16 @@ def index(request):
     return render(request, 'index.html')
 
 
-# def bot(request):
-#     return render(request, 'bot_main.py')
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer): # Создаем пользовательский ответ на запрос токенов
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # Добравляем нужное для возвращения вместе с acceess и refresh токенами
+        data['id'] = self.user.id
+
+        return data
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
