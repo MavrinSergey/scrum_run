@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'scrumboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # удалили psycopg2
-        'NAME': 'scrumrun',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': '31.129.98.208',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Gb2024))',
+        'HOST': '45.90.35.178',
         'PORT': '5432',
     }
 }
