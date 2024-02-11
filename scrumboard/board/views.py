@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
