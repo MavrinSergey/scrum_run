@@ -9,8 +9,7 @@ from .models import User, Task
 
 class RegistrationSerializer(serializers.ModelSerializer):
     """Получает данные из RegistrationViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
-    RegistrationViewSet. работает с моделью User"""
-    print("Запустился RegistrationSerializer")
+    RegistrationViewSet. Работает с моделью User"""
 
     password = serializers.CharField(write_only=True)
 
@@ -24,19 +23,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['password', 'email']
-    print("Завершился RegistrationSerializer")
 
 
 class TaskSerializer(serializers.ModelSerializer):
     """Получает данные из TaskViewSet обрабатывает входящие запросы и создает исходящие передавая их обратно в
-    TaskViewSet. работает с моделью Task"""
+    TaskViewSet. Работает с моделью Task"""
     user_first_name = serializers.CharField(source='user.first_name', required=False)
     user_last_name = serializers.CharField(source='user.last_name', required=False)
 
     class Meta:
         model = Task
         fields = '__all__'
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):  # переопределение возвращаемых значений (Получаем токен пользователя)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    # переопределение возвращаемых значений (Получаем токен пользователя)
     @classmethod
     def get_token(cls, User):
         token = super().get_token(User)

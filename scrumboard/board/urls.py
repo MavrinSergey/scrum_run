@@ -11,7 +11,7 @@ from .views import RegistrationViewSet, TaskViewSet, MyTokenObtainPairView
 """создаем объект router на основе класса SimpleRouter"""
 router = routers.SimpleRouter()
 """регистрируем в нем класс ViewSet"""
-router.register(r'task', TaskViewSet)  # сдесь генерируется весь набор маршрутов
+router.register(r'task', TaskViewSet)  # здесь генерируется весь набор маршрутов
 
 
 """маршрутизатор получает запрос и предает его тому представлению которое связано с этим запросом"""
